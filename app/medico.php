@@ -1,0 +1,16 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class medico extends Model
+{
+    use SoftDeletes;
+
+    protected $fillable = ['nome','crm_numero','crm_uf','cpf','rg','data_nascimento','sexo','email_profissional','email_pessoal',
+                           'fone_comercial', 'fone_celular', 'fone_residencial', 'end_com_logradouro', 'end_com_numero', 'end_com_complemento',
+                           'end_com_bairro', 'end_com_cidade', 'end_com_uf', 'end_com_cep'];
+
+    protected $date = ['deleted_at'];
+}
