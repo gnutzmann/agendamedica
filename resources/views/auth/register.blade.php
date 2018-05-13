@@ -55,13 +55,13 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="crm" class="col-md-4 col-form-label text-md-right">CRM</label>
+                            <label for="crm_numero" class="col-md-4 col-form-label text-md-right">CRM</label>
 
                             <div class="col-md-4">
-                                <input id="crm" type="text" class="form-control{{ $errors->has('crm') ? ' is-invalid' : '' }}" name="crm" value="{{ old('crm') }}"
-                                    required autofocus> @if ($errors->has('crm'))
+                                <input id="crm_numero" type="text" class="form-control{{ $errors->has('crm_numero') ? ' is-invalid' : '' }}" name="crm_numero" value="{{ old('crm_numero') }}"
+                                    required autofocus> @if ($errors->has('crm_numero'))
                                 <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('crm') }}</strong>
+                                        <strong>{{ $errors->first('crm_numero') }}</strong>
                                 </span> @endif
                             </div>
 
@@ -165,11 +165,8 @@
                             <label for="fone_residencial" class="col-md-4 col-form-label text-md-right">Fone residencial</label>
                         
                             <div class="col-md-4">
-                                <input id="fone_residencial" type="text" class="form-control{{ $errors->has('fone_residencial') ? ' is-invalid' : '' }}" name="fone_residencial"
-                                    value="{{ old('fone_residencial') }}" required autofocus> @if ($errors->has('fone_residencial'))
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('fone_residencial') }}</strong>
-                                </span> @endif
+                                <input id="fone_residencial" type="text" class="form-control" name="fone_residencial"
+                                    value="{{ old('fone_residencial') }}">                                 
                             </div>
                         </div>
 

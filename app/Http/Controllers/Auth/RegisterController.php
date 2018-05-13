@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Medico;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -64,6 +65,14 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
    
+    $data['nome'] = $data['name'];
+    $data['email_profissional'] = $data['email'];
+
+    /*dd($data);*/
+
+    $medico = Medico::create($data);    
+
+    /*dd($medico['id']);*/
      /*   $x = User::create([
     'name' => $data['name'],
     'email' => $data['email'],
@@ -76,6 +85,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'medico' => $medico['id'],
         ]);
     }
 }

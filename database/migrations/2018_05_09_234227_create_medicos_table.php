@@ -27,12 +27,12 @@ class CreateMedicosTable extends Migration
             $table->string('fone_comercial',30);
             $table->string('fone_celular',30)->nullable();
             $table->string('fone_residencial',30)->nullable();
-            $table->string('end_com_logradouro');
-            $table->string('end_com_numero');
-            $table->string('end_com_complemento');
-            $table->string('end_com_bairro');
-            $table->string('end_com_cidade');
-            $table->string('end_com_uf',2);
+            $table->string('end_com_logradouro')->nullable();
+            $table->string('end_com_numero')->nullable();
+            $table->string('end_com_complemento')->nullable();
+            $table->string('end_com_bairro')->nullable();
+            $table->string('end_com_cidade')->nullable();
+            $table->string('end_com_uf',2)->nullable();
             $table->string('end_com_cep',10)->nullable();
             $table->timestamps();
             $table->softDeletes();         

@@ -3,8 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class medico extends Model
+class Medico extends Model
 {
     use SoftDeletes;
 
@@ -13,4 +14,9 @@ class medico extends Model
                            'end_com_bairro', 'end_com_cidade', 'end_com_uf', 'end_com_cep'];
 
     protected $date = ['deleted_at'];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

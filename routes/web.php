@@ -18,6 +18,4 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/medico', function () { 
-                                    return view('medico');
-                                  });
+Route::resource('agendas', 'AgendaController')->middleware('auth');
