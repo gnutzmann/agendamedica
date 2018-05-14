@@ -14,14 +14,14 @@
 
     <div class="row">
 
-        <div class="col-sm-3 col-md-4">
+        <div class="col-sm-3 col-md-6">
             <a href="{{action('AgendaController@create')}}" class="btn btn-primary pull-right h2">Nova agenda</a>
         </div>
 
-        <div class="col-sm-6 col-md-8 float-right">
+        <div class="col-sm-6 col-md-6 float-right">
 
             <div class="input-group h2">
-                <input name="busca" class="form-control" id="busca" type="text" placeholder="Pesquisar Itens">
+                <input name="busca" class="form-control" id="busca" type="text" placeholder="Pesquisar">
                 <span class="input-group-btn">
     					<button class="btn btn-primary" type="submit">
     					<span class="fa fa-search"></span>
@@ -48,7 +48,7 @@
                     <tr>
                         <td class=""> <a href="#">{{$agenda['nome']}}</a></td>
 
-                        @if ($agenda['ativa'] = 1)
+                        @if ($agenda['ativa'] == 1)
                             <td class="d-none d-sm-block">Sim</td>
                         @else
                             <td class="d-none d-sm-block">Não</td>
@@ -69,7 +69,7 @@
                             </span>
 
                             <span class="input-group-btn m-1">
-                                <form action="{{action('AgendaController@destroy', $agenda['id'])}}" method="post">
+                                <form action="{{action('AgendaController@destroy', $agenda['id'])}}" method="POST">
                                     @csrf
                                     <input name="_method" type="hidden" value="DELETE">
                                     <button type="submit" class="btn btn-danger btn-xs" style="color:white;max-width: 38px">

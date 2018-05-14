@@ -30,5 +30,22 @@ class User extends Authenticatable
     public function medicos()
     {
         return $this->hasOne('App\Medico');
-    } 
+    }
+
+    public static function getTratamento($medico)
+    {
+
+        if (isset($medico)) {
+            $m = new Medico;
+            $m = Medico::findOrFail($medico);
+
+            if ($m->sexo == "F") {
+                return "Dra.";
+            } else {
+                return "Dr.";
+            }
+        } else {
+            return "";
+        }
+    }
 }

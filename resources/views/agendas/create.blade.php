@@ -19,14 +19,16 @@
                                 <span class="invalid-feedback">
                                         <strong>{{ $errors->first('nome') }}</strong>
                                     </span> @endif
-                            </div>
-                        </div>                                            
+                            </div>                                                               
+                        </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Criar
-                                </button>
+                        <div class="form-inline m-0 justify-content-center">
+                            <div class="col-md-1 m-1">
+                                <button type="submit" class="btn btn-primary">Criar</button>
+                            </div>
+                        
+                            <div class="col-md-1 m-1">
+                                <a type="link" class="btn btn-info" href="{{ route('agendas.index')}}">Voltar</a>
                             </div>
                         </div>
                     </form>

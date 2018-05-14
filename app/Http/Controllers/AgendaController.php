@@ -21,7 +21,7 @@ class AgendaController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {        
         $user = auth()->user();
 
         $agendas = new Agenda;
@@ -38,18 +38,19 @@ class AgendaController extends Controller
 
     public function edit($id)
     {
-        $agendas = Agenda::findOrFail($id);
-        return view('agendas.edit', compact('data'));
+        $agenda = Agenda::findOrFail($id);
+        return view('agendas.edit', compact('agenda'));
     }
 
     public function update(Request $request, $id)
     {
-        $agendas = Product::findOrFail($id);
-        $agendas->nome = $request->nome;
-        $agendas->medico = $request->medico;
-        $agendas->ativa = $request->ativa;        
-        $agendas->save();
-        return redirect()->route('products.index')->with('message', 'Agenda atualizada com sucesso!');
+
+        //dd($request);
+        $agenda = Agenda::findOrFail($id);
+        $agenda->nome = $request->nome;        
+        $agenda->ativa = $request->ativa;        
+        $agenda->save();
+        return redirect()->route('agendas.index')->with('message', 'Agenda atualizada com sucesso!');
     }
 
     public function destroy($id)
