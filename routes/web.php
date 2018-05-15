@@ -19,3 +19,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('agenda', 'AgendaController')->middleware('auth');
+Route::resource('paciente', 'PacienteController')->middleware('auth');
+
