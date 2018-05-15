@@ -12,12 +12,12 @@ class AgendaController extends Controller
         $user = auth()->user();
 
         $agendas = Agenda::where('medico','=',$user['medico'])->orderBy('nome', 'asc')->paginate(3);
-        return view('agendas.index', compact('agendas'));
+        return view('agenda.index', compact('agendas'));
     }
 
     public function create()
     {
-        return view('agendas.create');
+        return view('agenda.create');
     }
 
     public function store(Request $request)
@@ -28,7 +28,7 @@ class AgendaController extends Controller
         $agendas->nome   = $request->nome;
         $agendas->medico = $user['medico'];        
         $agendas->save();
-        return redirect()->route('agendas.index')->with('message', 'Agenda criada com sucesso!');
+        return redirect()->route('agenda.index')->with('message', 'Agenda criada com sucesso!');
     }
 
     public function show($id)
@@ -39,7 +39,7 @@ class AgendaController extends Controller
     public function edit($id)
     {
         $agenda = Agenda::findOrFail($id);
-        return view('agendas.edit', compact('agenda'));
+        return view('agenda.edit', compact('agenda'));
     }
 
     public function update(Request $request, $id)
@@ -50,13 +50,13 @@ class AgendaController extends Controller
         $agenda->nome = $request->nome;        
         $agenda->ativa = $request->ativa;        
         $agenda->save();
-        return redirect()->route('agendas.index')->with('message', 'Agenda atualizada com sucesso!');
+        return redirect()->route('agenda.index')->with('message', 'Agenda atualizada com sucesso!');
     }
 
     public function destroy($id)
     {
         $agendas = Agenda::findOrFail($id);
         $agendas->delete();
-        return redirect()->route('agendas.index')->with('alert-success', 'A agenda foi removida com sucesso!');
+        return redirect()->route('agenda.index')->with('alert-success', 'A agenda foi removida com sucesso!');
     }    
 }

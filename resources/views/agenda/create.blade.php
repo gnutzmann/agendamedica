@@ -7,7 +7,7 @@
                 <div class="card-header">Agenda</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('agendas.store') }}">
+                    <form method="POST" action="{{ route('agenda.store') }}">
                         @csrf
 
                         <div class="form-group row">
@@ -28,7 +28,7 @@
                             </div>
                         
                             <div class="col-md-1 m-1">
-                                <a type="link" class="btn btn-info" href="{{ route('agendas.index')}}">Voltar</a>
+                                <a type="link" class="btn btn-info" href="{{ route('agenda.index')}}">Voltar</a>
                             </div>
                         </div>
                     </form>

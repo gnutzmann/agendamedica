@@ -7,7 +7,7 @@
                 <div class="card-header">Agenda</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('agendas.update',$agenda->id) }}">
+                    <form method="POST" action="{{ route('agenda.update',$agenda->id) }}">
                         @csrf
                         @method('PUT')
 
@@ -41,7 +41,7 @@
                             </div>
                         
                             <div class="col-md-2 m-1">
-                                <a type="link" class="btn btn-info" href="{{ route('agendas.index')}}">Voltar</a>
+                                <a type="link" class="btn btn-info" href="{{ route('agenda.index')}}">Voltar</a>
                             </div>
                         </div>
                     </form>
