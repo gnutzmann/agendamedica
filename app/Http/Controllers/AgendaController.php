@@ -28,7 +28,7 @@ class AgendaController extends Controller
         $agendas->nome   = $request->nome;
         $agendas->medico = $user['medico'];        
         $agendas->save();
-        return redirect()->route('agenda.index')->with('message', 'Agenda criada com sucesso!');
+        return redirect()->route('agenda.index')->with('alert-success', 'Agenda criada com sucesso!');
     }
 
     public function show($id)
@@ -50,7 +50,7 @@ class AgendaController extends Controller
         $agenda->nome = $request->nome;        
         $agenda->ativa = $request->ativa;        
         $agenda->save();
-        return redirect()->route('agenda.index')->with('message', 'Agenda atualizada com sucesso!');
+        return redirect()->route('agenda.index')->with('alert-info', 'Agenda atualizada com sucesso!');
     }
 
     public function destroy($id)
