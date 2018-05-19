@@ -10,8 +10,8 @@ class Paciente extends Model
     use SoftDeletes;
 
     protected $fillable = ['nome','sexo','data_nascimento','email','fone_residencial','fone_celular','cpf','rg',
-                           'end_com_logradouro','end_com_numero','end_com_complemento','end_com_bairro','end_com_cidade',
-                           'end_com_uf','end_com_cep'];
+                           'end_res_logradouro','end_res_numero','end_res_complemento','end_res_bairro','end_res_cidade',
+                           'end_res_uf','end_res_cep'];
 
 
     protected $guarded = ['id', 'created_at', 'update_at'];

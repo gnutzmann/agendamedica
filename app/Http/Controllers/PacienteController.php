@@ -27,7 +27,7 @@ class PacienteController extends Controller
      */
     public function create()
     {
-        //
+        return view('paciente.create');
     }
 
     /**
@@ -38,7 +38,12 @@ class PacienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $paciente = $request->all();
+
+        Paciente::create($paciente);        
+        
+        return redirect()->route('paciente.index')->with('alert-success', 'O paciente foi adicionado com sucesso!');
     }
 
     /**
@@ -60,7 +65,8 @@ class PacienteController extends Controller
      */
     public function edit($id)
     {
-        //
+        $paciente = Paciente::findOrFail($id);
+        return view('paciente.edit', compact('paciente'));
     }
 
     /**
@@ -72,7 +78,13 @@ class PacienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $data = $request->all();        
+        $paciente = Paciente::findOrFail($id);        
+        $paciente->fill($data);        
+        $paciente->save();
+
+        return redirect()->route('paciente.index')->with('alert-info', 'Paciente atualizado com sucesso!');
     }
 
     /**
@@ -83,6 +95,8 @@ class PacienteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $paciente = Paciente::findOrFail($id);
+        $paciente->delete();
+        return redirect()->route('paciente.index')->with('alert-success', 'O paciente foi removido com sucesso!');
     }
 }
