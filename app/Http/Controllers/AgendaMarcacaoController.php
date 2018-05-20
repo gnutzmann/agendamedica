@@ -3,17 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\AgendaMarcacao;
 
 class AgendaMarcacaoController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * @param  int  $agenda
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($agenda_id)
     {
-        //
+        $marcacoes = AgendaMarcacao::where('agenda_id', '=', $agenda_id)->orderBy('data', 'hora_inicial')->paginate(10);
+
+        //dd($marcacoes[0]->paciente());
+
+        return view('agenda.agendamarcacao.index', compact('marcacoes'));    
     }
 
     /**
@@ -22,8 +27,8 @@ class AgendaMarcacaoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    {        
+        return view('agenda.agendamarcacao.create');
     }
 
     /**
@@ -45,7 +50,7 @@ class AgendaMarcacaoController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**

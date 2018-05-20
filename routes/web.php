@@ -1,5 +1,7 @@
 <?php
 
+use App\AgendaMarcacao;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,12 +14,18 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+    if (Auth::check()) {
+        return view('home');    
+    } else {
+        return view('welcome');
+    }
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('agenda', 'AgendaController')->middleware('auth');
+Route::resource('agenda.marcacao', 'AgendaMarcacaoController')->middleware('auth');
 Route::resource('paciente', 'PacienteController')->middleware('auth');
 

@@ -70,22 +70,13 @@ class RegisterController extends Controller
 
     /*dd($data);*/
 
-    $medico = Medico::create($data);    
+    $medico = Medico::create($data);       
 
-    /*dd($medico['id']);*/
-     /*   $x = User::create([
-    'name' => $data['name'],
-    'email' => $data['email'],
-    'password' => Hash::make($data['password']),
-    ]);
-
-    dd($x);*/
-
-        return User::create([
+    return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'medico' => $medico['id'],
+            'medico_id' => $medico['id'],
         ]);
     }
 }

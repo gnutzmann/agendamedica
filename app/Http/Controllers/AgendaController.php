@@ -11,7 +11,7 @@ class AgendaController extends Controller
     {
         $user = auth()->user();
 
-        $agendas = Agenda::where('medico','=',$user['medico'])->orderBy('nome', 'asc')->paginate(3);
+        $agendas = Agenda::where('medico_id','=',$user['medico_id'])->orderBy('nome', 'asc')->paginate(3);
         return view('agenda.index', compact('agendas'));
     }
 
@@ -25,8 +25,8 @@ class AgendaController extends Controller
         $user = auth()->user();
 
         $agendas = new Agenda;
-        $agendas->nome   = $request->nome;
-        $agendas->medico = $user['medico'];        
+        $agendas->nome      = $request->nome;
+        $agendas->medico_id = $user['medico_id'];        
         $agendas->save();
         return redirect()->route('agenda.index')->with('alert-success', 'Agenda criada com sucesso!');
     }

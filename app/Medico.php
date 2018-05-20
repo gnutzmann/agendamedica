@@ -21,4 +21,8 @@ class Medico extends Model
     {
         return $this->belongsTo('App\User');
     }    
+
+    public function agendas() {
+        return $this->hasMany('App\Agenda');
+    }
 }

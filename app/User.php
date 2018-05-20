@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','medico'
+        'name', 'email', 'password','medico_id'
     ];
 
     /**
@@ -27,17 +27,17 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function medicos()
+    public function medico()
     {
         return $this->hasOne('App\Medico');
     }
 
-    public static function getTratamento($medico)
+    public static function getTratamento($medico_id)
     {
 
-        if (isset($medico)) {
+        if (isset($medico_id)) {
             $m = new Medico;
-            $m = Medico::findOrFail($medico);
+            $m = Medico::findOrFail($medico_id);
 
             if ($m->sexo == "F") {
                 return "Dra.";

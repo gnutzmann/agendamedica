@@ -17,4 +17,9 @@ class Paciente extends Model
     protected $guarded = ['id', 'created_at', 'update_at'];
 
     protected $date = ['deleted_at'];
+
+    public function agendaMarcacoes() {
+        return $this->hasMany('App\AgendaMarcacao');
+    }
+
 }

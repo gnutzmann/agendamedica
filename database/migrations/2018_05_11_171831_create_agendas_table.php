@@ -17,7 +17,7 @@ class CreateAgendasTable extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->boolean('ativa')->default(true);
-            $table->integer('medico');
+            $table->integer('medico_id');
             $table->softDeletes();
             $table->timestamps();
         });

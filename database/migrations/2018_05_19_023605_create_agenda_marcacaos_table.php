@@ -15,11 +15,11 @@ class CreateAgendaMarcacaosTable extends Migration
     {
         Schema::create('agenda_marcacoes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('agenda');
+            $table->integer('agenda_id');
             $table->date('data');
             $table->time('hora_inicial');
             $table->time('hora_final');
-            $table->integer('paciente');
+            $table->integer('paciente_id');
             $table->text('evolucao_paciente')->nullable();
             $table->timestamps();            
         });
