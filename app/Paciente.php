@@ -26,11 +26,13 @@ class Paciente extends Model
 
     public static function listaPacienteMedico($medico_id) {
 
-        $pacientes = DB::table('pacientes')                        
+        $pacientes = DB::table('pacientes')     
+                        ->join('medico_paciente','pacientes.id','=','medico_paciente.paciente_id')                   
                         ->select('pacientes.id', 'pacientes.nome','pacientes.data_nascimento','pacientes.email')
                         ->whereNull('pacientes.deleted_at')                        
+                        ->where('medico_paciente.medico_id','=',$medico_id)
                         ->orderBy('pacientes.nome', 'ASC')
-                        ->get();
+                        ->paginate(10);
 
         return $pacientes;
                         

@@ -48,10 +48,10 @@
                 <tbody>
                     @foreach($pacientes as $paciente)
                     <tr>
-                        <td class="">{{$paciente['id']}}</td>                        
-                        <td class="">{{$paciente['nome']}}</td>
-                        <td class="">{{date('d/m/Y',strtotime($paciente['data_nascimento']))}}</td>
-                        <td class="">{{$paciente['email']}}</td>
+                        <td class="">{{$paciente->id}}</td>                        
+                        <td class="">{{$paciente->nome}}</td>
+                        <td class="">{{date('d/m/Y',strtotime($paciente->data_nascimento))}}</td>
+                        <td class="">{{$paciente->email}}</td>
 
                         <td>
                             <div class="form-inline justify-content-center">
@@ -62,13 +62,13 @@
                             </span>                      
                         
                             <span class="input-group-btn m-1">
-                                <a class="btn btn-warning btn-xs" href="{{action('PacienteController@edit', $paciente['id'])}}" style="color:white; max-width: 38px">
+                                <a class="btn btn-warning btn-xs" href="{{action('PacienteController@edit', $paciente->id)}}" style="color:white; max-width: 38px">
                                     <span class="fa fa-edit"></span>
                             </a>
                             </span>
 
                             <span class="input-group-btn m-1">
-                                <form action="{{action('PacienteController@destroy', $paciente['id'])}}" method="POST">
+                                <form action="{{action('PacienteController@destroy', $paciente->id)}}" method="POST">
                                     @csrf
                                     <input name="_method" type="hidden" value="DELETE">
                                     <button type="submit" class="btn btn-danger btn-xs" style="color:white;max-width: 38px">

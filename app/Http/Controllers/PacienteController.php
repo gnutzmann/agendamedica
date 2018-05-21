@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Paciente;
+use App\MedicoPaciente;
+
 
 class PacienteController extends Controller
 {
@@ -13,10 +15,11 @@ class PacienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //$user = auth()->user();
+    {       
+        $user = auth()->user();        
 
-        $pacientes = Paciente::orderBy('nome', 'asc')->paginate(5);
+        $pacientes = Paciente::listaPacienteMedico($user->medico_id);        
+
         return view('paciente.index', compact('pacientes'));
     }
 
@@ -39,9 +42,17 @@ class PacienteController extends Controller
     public function store(Request $request)
     {
         
-        $paciente = $request->all();
+        $data = $request->all();
+        $user = auth()->user();
 
-        Paciente::create($paciente);        
+        $paciente = new Paciente;
+        $paciente->fill($data);
+        $paciente->save();
+
+        $medicopaciente = new MedicoPaciente;
+        $medicopaciente->medico_id = $user->medico_id; 
+        $medicopaciente->paciente_id = $paciente->id;
+        $medicopaciente->save();
         
         return redirect()->route('paciente.index')->with('alert-success', 'O paciente foi adicionado com sucesso!');
     }
