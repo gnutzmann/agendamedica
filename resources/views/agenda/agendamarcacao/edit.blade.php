@@ -4,34 +4,42 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Agenda</div>
+                <div class="card-header">{{ "Agenda - Evolução do paciente ". $nome_paciente}}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('agenda.update',$agenda->id) }}">
+                    <form method="POST" action="{{ route('agenda.marcacao.update',[$agenda_id,$marcacao->id]) }}">
                         @csrf
                         @method('PUT')
 
-                        <div class="form-group row">
-                            <label for="nome" class="col-md-4 col-form-label text-md-right">Nome</label>
-
-                            <div class="col-md-6">
-                                <input id="nome" type="text" class="form-control{{ $errors->has('nome') ? ' is-invalid' : '' }}" name="nome" value="{{ $agenda->nome }}"
-                                    required autofocus> 
-                                @if ($errors->has('nome'))
-                                <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('nome') }}</strong>
-                                </span> 
-                                @endif
+                        <div class="form-group row m-0">
+                            <label for="data" class="col-md-4 col-form-label text-md-right">Data</label>
+                        
+                            <div class="col-md-4 col-form-label">
+                                <p id="data" name="data">{{ date('d-m-Y',strtotime($marcacao->data))}}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row m-0">
+                            <label for="hora_inicial" class="col-md-4 col-form-label text-md-right">Hora</label>
+                        
+                            <div class="col-form-label col-md-4">
+                                <p>{{ date('H:i',strtotime($marcacao->hora_inicial)) ." as ". date('H:i',strtotime($marcacao->hora_final))  }}</p>
+                            </div>
+                        </div> 
+                        
+                        <div class="form-group row m-0">
+                            <label for="evolucao_paciente" class="col-md-4 col-form-label text-md-right">Evolução</label>
+                        
+                            <div class="col-md-8">
+                                <textarea name="evolucao_paciente" id="evolucao_paciente" rows="15" class="form-control">{{ trim($marcacao->evolucao_paciente) }}</textarea>
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="ativa" class="col-md-4 col-form-label text-md-right">Ativa</label>
-                            <div class="col-md-4">
-                                <select name="ativa" id="ativa" class="form-control" value="{{ $agenda->ativa }}">
-                                        <option value="0" @if ($agenda->ativa == 0) selected @endif>Não</option>
-                                        <option value="1" @if ($agenda->ativa == 1) selected @endif>Sim</option>
-                                </select>
+                        <div class="form-group row m-0">
+                            <label for="updated_at" class="col-md-4 col-form-label text-md-right">Atualizado em</label>
+                        
+                            <div class="col-md-4 col-form-label">
+                                <p id="updated_at" name="updated_at"><strong>{{ date('d-m-Y H:i',strtotime($marcacao->updated_at))}}</strong></p>
                             </div>
                         </div>
 
@@ -41,7 +49,7 @@
                             </div>
                         
                             <div class="col-md-2 m-1">
-                                <a type="link" class="btn btn-info" href="{{ route('agenda.index')}}">Voltar</a>
+                                <a type="link" class="btn btn-info" href="{{ route('agenda.marcacao.index',[$agenda_id])}}">Voltar</a>
                             </div>
                         </div>
                     </form>

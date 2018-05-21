@@ -15,8 +15,7 @@
     <div class="row">
 
         <div class="col-sm-3 col-md-6">
-            {{-- <a href="{{action('AgendaMarcacaoController@create',)}}" class="btn btn-primary pull-right h2">Nova marcação</a> --}}
-            <a href="#" class="btn btn-primary pull-right h2">Nova marcação</a>
+            <a href="{{action('AgendaMarcacaoController@create',$agenda_id)}}" class="btn btn-primary pull-right h2">Nova marcação</a>
         </div>
 
         <div class="col-sm-6 col-md-6 float-right">
@@ -40,7 +39,7 @@
                 <thead>
                     <tr>
                         <th>Data</th>
-                        <th>Hora inicial</th>                        
+                        <th>Hora</th>                        
                         <th>Paciente</th>                        
                         <th colspan="3" class="text-center">Ações</th>
                     </tr>
@@ -48,28 +47,27 @@
                 <tbody>
                     @foreach($marcacoes as $marcacao)
                     <tr>
-                        <td class="">{{ date('d-m-Y',strtotime($marcacao['data'])) }}</td>
-                        <td class="">{{ date('H:i',strtotime($marcacao['hora_inicial'])) }}</td>                        
-                        <td class="">{{ $marcacao['paciente_id'] }}</td>                        
+                        <td class="">{{ date('d-m-Y',strtotime($marcacao->data)) }}</td>
+                        <td class="">{{ date('H:i',strtotime($marcacao->hora_inicial)) ." as ". date('H:i',strtotime($marcacao->hora_final)) }}</td>                        
+                        <td class="">{{ $marcacao->nome }}</td>                        
 
-                        <td>                       
-                            <span class="input-group-btn m-1">
-                                {{-- <a class="btn btn-warning btn-xs" href="{{action('AgendaController@edit', $marcacao['id'])}}" style="color:white; max-width: 38px"> --}}
-                            <a class="btn btn-warning btn-xs" href="#" style="color:white; max-width: 38px">
-                                <span class="fa fa-edit"></span>
-                            </a>
-                            </span>
-
-                            <span class="input-group-btn m-1">
-                                {{-- <form action="{{action('AgendaController@destroy', $marcacao['id'])}}" method="POST"> --}}
-                                    <form action="#" method="POST">
-                                    @csrf
-                                    <input name="_method" type="hidden" value="DELETE">
-                                    <button type="submit" class="btn btn-danger btn-xs" style="color:white;max-width: 38px">
-                                        <span class="fa fa-trash-alt"></span>                                    
-                                    </button>
-                                </form>
-                            </span>
+                        <td>              
+                            <div class="form-inline justify-content-center">         
+                                <span class="input-group-btn m-1">
+                                    <a class="btn btn-warning btn-xs" href="{{action('AgendaMarcacaoController@edit',[$agenda_id, $marcacao->id])}}" style="color:white; max-width: 38px">                                 
+                                    <span class="fa fa-edit"></span>
+                                </a>
+                                </span>
+                            
+                                <span class="input-group-btn m-1">
+                                    <form action="{{action('AgendaMarcacaoController@destroy',[$agenda_id,$marcacao->id])}}" method="POST">                                        
+                                        @csrf
+                                        <input name="_method" type="hidden" value="DELETE">
+                                        <button type="submit" class="btn btn-danger btn-xs" style="color:white;max-width: 38px">
+                                            <span class="fa fa-trash-alt"></span>                                    
+                                        </button>
+                                    </form>
+                                </span>
                             </div>
                         </td>
                     </tr>

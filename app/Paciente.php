@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
+
 
 class Paciente extends Model
 {
@@ -21,5 +23,18 @@ class Paciente extends Model
     public function agendaMarcacoes() {
         return $this->hasMany('App\AgendaMarcacao');
     }
+
+    public static function listaPacienteMedico($medico_id) {
+
+        $pacientes = DB::table('pacientes')                        
+                        ->select('pacientes.id', 'pacientes.nome','pacientes.data_nascimento','pacientes.email')
+                        ->whereNull('pacientes.deleted_at')                        
+                        ->orderBy('pacientes.nome', 'ASC')
+                        ->get();
+
+        return $pacientes;
+                        
+    }
+
 
 }
