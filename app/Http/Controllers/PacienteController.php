@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
 use App\Paciente;
 use App\MedicoPaciente;
-
+use App\User;
 
 class PacienteController extends Controller
 {
@@ -41,20 +43,36 @@ class PacienteController extends Controller
      */
     public function store(Request $request)
     {
+        $generator = new ComputerPasswordGenerator();
         
+        $generator->setUppercase(true)
+                  ->setLowercase(false)
+                  ->setNumbers(true)
+                  ->setSymbols(false)
+                  ->setLength(4);
+        
+        $password = $generator->generatePassword();       
+
         $data = $request->all();
-        $user = auth()->user();
+        $medico_user = auth()->user();
 
         $paciente = new Paciente;
         $paciente->fill($data);
         $paciente->save();
 
         $medicopaciente = new MedicoPaciente;
-        $medicopaciente->medico_id = $user->medico_id; 
+        $medicopaciente->medico_id = $medico_user->medico_id; 
         $medicopaciente->paciente_id = $paciente->id;
         $medicopaciente->save();
-        
-        return redirect()->route('paciente.index')->with('alert-success', 'O paciente foi adicionado com sucesso!');
+
+        $user = new User;
+        $user->name        = $paciente->nome;
+        $user->email       = $paciente->email;
+        $user->password    = Hash::make($password);
+        $user->paciente_id = $paciente->id;
+        $user->save();
+
+        return redirect()->route('paciente.index')->with('alert-success', 'O paciente foi adicionado com sucesso! Senha = '. $password);
     }
 
     /**
