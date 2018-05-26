@@ -29,9 +29,9 @@
                 
                             <div class="col-md-4">
                                 <select name="sexo" class="form-control{{ $errors->has('sexo') ? ' is-invalid' : '' }}" name="sexo" value="{{ $paciente->sexo }}"
-                                    required autofocus> 
-                                        <option value="F" selected>Feminino</option>
-                                        <option value="M">Masculino</option>                                	
+                                    required autofocus>
+                                        <option value="F" {{ old('sexo',$paciente->sexo) == 'F' ? 'selected' : '' }}>Feminino</option>
+                                        <option value="M" {{ old('sexo',$paciente->sexo) == 'M' ? 'selected' : '' }}>Masculino</option>                                	
                                 </select> 
                                 @if ($errors->has('sexo'))
                                     <span class="invalid-feedback">
@@ -164,33 +164,33 @@
                             <div class="col-md-4">
                                 <select name="end_res_uf" class="form-control{{ $errors->has('end_res_uf') ? ' is-invalid' : '' }}" name="end_res_uf" value="{{ $paciente->end_res_uf }}"
                                     required autofocus> 
-                                                    <option value="AC">Acre</option>
-                                                    <option value="AL">Alagoas</option>
-                                                    <option value="AP">Amapá</option>
-                                                    <option value="AM">Amazonas</option>
-                                                    <option value="BA">Bahia</option>
-                                                    <option value="CE">Ceará</option>
-                                                    <option value="DF">Distrito Federal</option>
-                                                    <option value="ES">Espírito Santo</option>
-                                                    <option value="GO">Goiás</option>
-                                                    <option value="MA">Maranhão</option>
-                                                    <option value="MT">Mato Grosso</option>
-                                                    <option value="MS">Mato Grosso do Sul</option>
-                                                    <option value="MG">Minas Gerais</option>
-                                                    <option value="PA">Pará</option>
-                                                    <option value="PB">Paraíba</option>
-                                                    <option value="PR">Paraná</option>
-                                                    <option value="PE">Pernambuco</option>
-                                                    <option value="PI">Piauí</option>
-                                                    <option value="RJ">Rio de Janeiro</option>
-                                                    <option value="RN">Rio Grande do Norte</option>
-                                                    <option value="RS" selected>Rio Grande do Sul</option>
-                                                    <option value="RO">Rondônia</option>
-                                                    <option value="RR">Roraima</option>
-                                                    <option value="SC">Santa Catarina</option>
-                                                    <option value="SP">São Paulo</option>
-                                                    <option value="SE">Sergipe</option>
-                                                    <option value="TO">Tocantins</option>
+                                                    <option value="AC" {{ old('end_res_uf',$paciente->end_res_uf) == 'AC' ? 'selected' : '' }} >Acre</option>
+                                                    <option value="AL" {{ old('end_res_uf',$paciente->end_res_uf) == 'AL' ? 'selected' : '' }} >Alagoas</option>
+                                                    <option value="AP" {{ old('end_res_uf',$paciente->end_res_uf) == 'AP' ? 'selected' : '' }} >Amapá</option>
+                                                    <option value="AM" {{ old('end_res_uf',$paciente->end_res_uf) == 'AM' ? 'selected' : '' }} >Amazonas</option>
+                                                    <option value="BA" {{ old('end_res_uf',$paciente->end_res_uf) == 'BA' ? 'selected' : '' }} >Bahia</option>
+                                                    <option value="CE" {{ old('end_res_uf',$paciente->end_res_uf) == 'CE' ? 'selected' : '' }} >Ceará</option>
+                                                    <option value="DF" {{ old('end_res_uf',$paciente->end_res_uf) == 'DF' ? 'selected' : '' }} >Distrito Federal</option>
+                                                    <option value="ES" {{ old('end_res_uf',$paciente->end_res_uf) == 'ES' ? 'selected' : '' }} >Espírito Santo</option>
+                                                    <option value="GO" {{ old('end_res_uf',$paciente->end_res_uf) == 'GO' ? 'selected' : '' }} >Goiás</option>
+                                                    <option value="MA" {{ old('end_res_uf',$paciente->end_res_uf) == 'MA' ? 'selected' : '' }} >Maranhão</option>
+                                                    <option value="MT" {{ old('end_res_uf',$paciente->end_res_uf) == 'MT' ? 'selected' : '' }} >Mato Grosso</option>
+                                                    <option value="MS" {{ old('end_res_uf',$paciente->end_res_uf) == 'MS' ? 'selected' : '' }} >Mato Grosso do Sul</option>
+                                                    <option value="MG" {{ old('end_res_uf',$paciente->end_res_uf) == 'MG' ? 'selected' : '' }} >Minas Gerais</option>
+                                                    <option value="PA" {{ old('end_res_uf',$paciente->end_res_uf) == 'PA' ? 'selected' : '' }} >Pará</option>
+                                                    <option value="PB" {{ old('end_res_uf',$paciente->end_res_uf) == 'PB' ? 'selected' : '' }} >Paraíba</option>
+                                                    <option value="PR" {{ old('end_res_uf',$paciente->end_res_uf) == 'PR' ? 'selected' : '' }} >Paraná</option>
+                                                    <option value="PE" {{ old('end_res_uf',$paciente->end_res_uf) == 'PE' ? 'selected' : '' }} >Pernambuco</option>
+                                                    <option value="PI" {{ old('end_res_uf',$paciente->end_res_uf) == 'PI' ? 'selected' : '' }} >Piauí</option>
+                                                    <option value="RJ" {{ old('end_res_uf',$paciente->end_res_uf) == 'RJ' ? 'selected' : '' }} >Rio de Janeiro</option>
+                                                    <option value="RN" {{ old('end_res_uf',$paciente->end_res_uf) == 'RN' ? 'selected' : '' }} >Rio Grande do Norte</option>
+                                                    <option value="RS" {{ old('end_res_uf',$paciente->end_res_uf) == 'RS' ? 'selected' : '' }} >Rio Grande do Sul</option>
+                                                    <option value="RO" {{ old('end_res_uf',$paciente->end_res_uf) == 'RO' ? 'selected' : '' }} >Rondônia</option>
+                                                    <option value="RR" {{ old('end_res_uf',$paciente->end_res_uf) == 'RR' ? 'selected' : '' }} >Roraima</option>
+                                                    <option value="SC" {{ old('end_res_uf',$paciente->end_res_uf) == 'SC' ? 'selected' : '' }} >Santa Catarina</option>
+                                                    <option value="SP" {{ old('end_res_uf',$paciente->end_res_uf) == 'SP' ? 'selected' : '' }} >São Paulo</option>
+                                                    <option value="SE" {{ old('end_res_uf',$paciente->end_res_uf) == 'SE' ? 'selected' : '' }} >Sergipe</option>
+                                                    <option value="TO" {{ old('end_res_uf',$paciente->end_res_uf) == 'TO' ? 'selected' : '' }} >Tocantins</option>
                                                     </select> 
                                 @if ($errors->has('end_res_uf'))
                                     <span class="invalid-feedback">
@@ -208,14 +208,24 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-8">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gera_senha" name="gera_senha" unchecked>
+                                    <label class="form-check-label" for="gera_senha">Gerar nova senha para o paciente</label>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-inline m-0 justify-content-center">
                             <div class="col-md-2 m-1">
                                 <button type="submit" class="btn btn-primary">Gravar</button>
-                            </div>
+                            </div>                            
                         
                             <div class="col-md-2 m-1">
                                 <a type="link" class="btn btn-info" href="{{ route('paciente.index')}}">Voltar</a>
-                            </div>
+                            </div>           
                         </div>
                     </form>
                 </div>

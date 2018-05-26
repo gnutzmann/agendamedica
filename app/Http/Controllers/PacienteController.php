@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
 use App\Paciente;
 use App\MedicoPaciente;
@@ -72,7 +73,7 @@ class PacienteController extends Controller
         $user->paciente_id = $paciente->id;
         $user->save();
 
-        return redirect()->route('paciente.index')->with('alert-success', 'O paciente foi adicionado com sucesso! Senha = '. $password);
+        return redirect()->route('paciente.index')->with('alert-success', 'O paciente foi adicionado com sucesso! Senha: '. $password);
     }
 
     /**
@@ -104,16 +105,37 @@ class PacienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * 
      */
     public function update(Request $request, $id)
     {
-
         $data = $request->all();        
         $paciente = Paciente::findOrFail($id);        
         $paciente->fill($data);        
         $paciente->save();
 
-        return redirect()->route('paciente.index')->with('alert-info', 'Paciente atualizado com sucesso!');
+        $mensagem = 'Paciente atualizado com sucesso!';
+  
+        if (isset($data['gera_senha'])) {        
+         
+            $generator = new ComputerPasswordGenerator();
+
+            $generator->setUppercase(true)
+                ->setLowercase(false)
+                ->setNumbers(true)
+                ->setSymbols(false)
+                ->setLength(4);
+
+            $password = $generator->generatePassword(); 
+            
+            DB::table('users')
+                ->where('paciente_id', $id)
+                ->update(['password' => Hash::make($password)]);
+
+            $mensagem .= ' Nova senha: ' . $password;         
+        }
+
+        return redirect()->route('paciente.index')->with('alert-info', $mensagem);
     }
 
     /**

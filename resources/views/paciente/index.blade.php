@@ -56,7 +56,7 @@
                         <td>
                             <div class="form-inline justify-content-center">
                             <span class="input-group-btn m-1">
-                                <a class="btn btn-success btn-xs" href="#" style="color:white;max-width: 38px">
+                            <a class="btn btn-success btn-xs" href="#" style="color:white;max-width: 38px">
                                 <span class="fa fa-share"></span>
                             </a>
                             </span>                      
