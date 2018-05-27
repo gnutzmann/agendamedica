@@ -15,8 +15,8 @@ use App\AgendaMarcacao;
 
 Route::get('/', function () {
 
-    if (Auth::check()) {
-        return view('home');    
+    if (Auth::check()) {         
+        return redirect()->route('home');    
     } else {
         return view('welcome');
     }
@@ -25,7 +25,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('agenda', 'AgendaController')->middleware('auth');
-Route::resource('agenda.marcacao', 'AgendaMarcacaoController')->middleware('auth');
-Route::resource('paciente', 'PacienteController')->middleware('auth');
+Route::resource('agenda', 'AgendaController')->middleware('auth')->middleware('can:ehMedico');
+Route::resource('agenda.marcacao', 'AgendaMarcacaoController')->middleware('auth')->middleware('can:ehMedico');;
+Route::resource('paciente', 'PacienteController')->middleware('auth')->middleware('can:ehMedico');
 

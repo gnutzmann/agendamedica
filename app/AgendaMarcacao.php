@@ -24,4 +24,17 @@ class AgendaMarcacao extends Model
             ->orderBy('agenda_marcacoes.data', 'ASC')
             ->paginate(10);
     }
+
+    public static function listaMarcacoesPaciente($paciente_id)
+    {
+        return DB::table('agenda_marcacoes')
+            ->join('agendas', 'agenda_marcacoes.agenda_id', '=', 'agendas.id')
+            ->join('medicos', 'agendas.medico_id', '=', 'medicos.id')
+            ->select('agenda_marcacoes.*', 'agendas.medico_id', 'medicos.nome')            
+            ->where('agenda_marcacoes.paciente_id', '=', $paciente_id)
+            ->whereDate('agenda_marcacoes.data','>=',date('Y-m-d'))
+            ->orderBy('agenda_marcacoes.data', 'ASC')
+            ->orderBy('agenda_marcacoes.hora_inicial','ASC')
+            ->get();
+    }
 }

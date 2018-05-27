@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\AgendaMarcacao;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if (auth()->user()->medico_id == null) {
+
+            $marcacoes = AgendaMarcacao::listaMarcacoesPaciente(auth()->user()->paciente_id);
+
+            //dd($marcacoes);
+
+            return view('paciente-home',compact('marcacoes'));    
+        } else {            
+            return view('medico-home');
+        }
     }
 }

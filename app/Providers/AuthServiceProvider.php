@@ -26,5 +26,14 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //
+        Gate::define('ehPaciente', function ($user) {
+                return ($user->paciente_id != null) && (($user->medico_id == null))  ;
+        });
+
+        Gate::define('ehMedico', function ($user) {
+            return ($user->paciente_id == null) && (($user->medico_id != null));
+        });
+
+
     }
 }
