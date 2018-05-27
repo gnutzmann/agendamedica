@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Agenda;
+use App\AgendaMarcacao;
 
 class AgendaController extends Controller
 {
@@ -11,7 +12,13 @@ class AgendaController extends Controller
     {
         $user = auth()->user();
 
-        $agendas = Agenda::where('medico_id','=',$user['medico_id'])->orderBy('nome', 'asc')->paginate(3);
+        $agendas = Agenda::where('medico_id','=',$user['medico_id'])->orderBy('ativa', 'desc')->orderBy('nome', 'asc')->get();
+        
+        foreach ($agendas as $key => $agenda) {
+            $agenda['tot_marcacao'] = AgendaMarcacao::where('agenda_id','=',$agenda['id'])->whereDate('data','>=',date('Y-m-d'))->count();    
+            $agenda['tot_cancelar'] = AgendaMarcacao::where('agenda_id', '=', $agenda['id'])->whereDate('data', '>=', date('Y-m-d'))->whereNotNull('paciente_solicita_cancelar')->count();
+        }
+        
         return view('agenda.index', compact('agendas'));
     }
 

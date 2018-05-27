@@ -1,101 +1,75 @@
 @extends('layouts.app') 
 @section('content')
-<div id="main" class="container justify-content-center">
 
-    <div id="top" class="row">
-        <div class="col-sm-12">
-            <h2>Lista de agendas</h2>
-        </div>
-
-    </div>
-    <!-- /#top -->
-
-    <hr />
-
-    <div class="row">
-
-        <div class="col-sm-3 col-md-6">
-            <a href="{{action('AgendaController@create')}}" class="btn btn-primary pull-right h2">Nova agenda</a>
-        </div>
-
-        <div class="col-sm-6 col-md-6 float-right">
-
-            <div class="input-group h2">
-                <input name="busca" class="form-control" id="busca" type="text" placeholder="Pesquisar">
-                <span class="input-group-btn">
-    					<button class="btn btn-primary" type="submit">
-    					<span class="fa fa-search"></span>
-                </button>
-                </span>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="col-md-8 p-0">
+                <h2>Gerenciamento de agendas</h2>
             </div>
+        
+            <hr />
 
-        </div>
-    </div>
+            <div class="col-md-8 pl-0">
+                <a href="{{action('AgendaController@create')}}" class="btn btn-primary pull-right h2">Nova agenda</a>
+            </div>
+        
+            
+            <div class="card-deck justify-content-center">
+                @foreach($agendas as $agenda)
 
-    <div id="lista" class="row">
+                    <div class="row col-xs-8 col-md-6 p-2">
+                        <div class="card col-xs-8 col-md-12 p-0">                    
+                            <h5 class="card-header {{ $agenda['ativa'] == 'Não' ? "bg-dark" : "bg-info"}} text-white"> <strong>{{ $agenda['nome'] }}</strong></h5>
+                            <div class="card-body align-itens-bottom">                                                        
 
-        <div class="table-responsive col-md-12">
-            <table class="table table-striped" cellspacing="0" cellpadding="0">
-                <thead>
-                    <tr>
-                        <th>Agenda</th>
-                        <th class="d-none d-sm-block">Ativa</th>
-                        <th colspan="3" class="text-center">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($agendas as $agenda)
-                    <tr>
-                        <td class=""> <a href="#">{{$agenda['nome']}}</a></td>
+                                <div class="form-inline justify-content-center">
+                                    <span class="input-group-btn m-1">
+                                        <a class="btn btn-success {{ $agenda['ativa'] == 'Não' ? "disabled" : ''}} btn-xs" href="{{ action('AgendaMarcacaoController@index', $agenda['id']) }}" style="color:white;max-width: 38px">
+                                            <span class="fa fa-calendar-check"></span>
+                                        </a>
+                                    </span>
+                                
+                                    <span class="input-group-btn m-1">
+                                        <a class="btn btn-warning btn-xs" href="{{action('AgendaController@edit', $agenda['id'])}}" style="color:white; max-width: 38px">
+                                            <span class="fa fa-edit"></span>
+                                        </a>
+                                    </span>
+                                
+                                    <span class="input-group-btn m-1">
+                                        <form action="{{action('AgendaController@destroy', $agenda['id'])}}" method="POST">
+                                            @csrf
+                                            <input name="_method" type="hidden" value="DELETE">
+                                                <button type="submit" class="btn btn-danger btn-xs" style="color:white;max-width: 38px">
+                                            <span class="fa fa-trash-alt"></span>
+                                            </button>
+                                        </form>
+                                    </span>
+                                </div>
 
-                        @if ($agenda['ativa'] == 1)
-                            <td class="d-none d-sm-block">Sim</td>
-                        @else
-                            <td class="d-none d-sm-block">Não</td>
-                        @endif
-
-                        <td>
-                            <div class="form-inline justify-content-center">
-                                <span class="input-group-btn m-1">
-                                    <a class="btn btn-success btn-xs" href="{{ action('AgendaMarcacaoController@index', $agenda['id']) }}" style="color:white;max-width: 38px">
-                                    <span class="fa fa-calendar-check"></span>
-                                </a>
-                                </span>                      
-                            
-                                <span class="input-group-btn m-1">
-                                    <a class="btn btn-warning btn-xs" href="{{action('AgendaController@edit', $agenda['id'])}}" style="color:white; max-width: 38px">
-                                        <span class="fa fa-edit"></span>
-                                </a>
-                                </span>
-                            
-                                <span class="input-group-btn m-1">
-                                    <form action="{{action('AgendaController@destroy', $agenda['id'])}}" method="POST">
-                                        @csrf
-                                        <input name="_method" type="hidden" value="DELETE">
-                                        <button type="submit" class="btn btn-danger btn-xs" style="color:white;max-width: 38px">
-                                            <span class="fa fa-trash-alt"></span>                                    
-                                        </button>
-                                    </form>
-                                </span>
+                                @if ($agenda['tot_cancelar'] > 0)
+                                    <p class="alert-danger mt-2 mb-0 text-center">{{ "Atenção"}}</p>
+                                    <p class="alert-danger m-0 text-center">{{ $agenda['tot_cancelar'] . " cancelamento(s)" }}</p>
+                                @elseif ($agenda['ativa'] == "Não")
+                                    <p class="alert-warning mt-2 mb-0 text-center">{{"Aviso"}}</p>
+                                    <p class="alert-warning m-0 text-center">Agenda desativada</p>                                
+                                @endif
                             </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-
-    </div>
-    <!-- /#list -->
-
-    <div id="bottom" class="row">
-        <div class="col-md-12">
-            <div align="center">{{$agendas}}</div>
-            <!-- /.pagination -->
+                            <div class="card-footer">
+                                <small class="text-muted">{{ $agenda['tot_marcacao'] . " marcações pendentes"}}</small>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>               
         </div>
     </div>
-    <!-- /#bottom -->
 </div>
-<!-- /#main -->
+
+
+
+
+
+
 
 @endsection
