@@ -112,4 +112,20 @@ class AgendaMarcacaoController extends Controller
         $marcacao->Delete();
         return redirect()->route('agenda.marcacao.index', compact('agenda_id'))->with('alert-success', 'Agendamento desmarcado com sucesso!');
     }
+
+    /**
+     * Solicita cancelamento de marcacao.
+     *
+     * 
+     * @param  int  $id           * 
+     * @return \Illuminate\Http\Response
+     */
+    public function cancela($id)
+    {
+        if (AgendaMarcacao::solicitaCancelamentoMarcacao($id)) {
+            return redirect()->route('home')->with('alert-success', 'Solicitação enviada!');
+        } else {
+            return redirect()->route('home')->with('alert-danger', 'Não foi possível solicitar o cancelamento!');
+        }
+    }
 }

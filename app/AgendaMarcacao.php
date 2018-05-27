@@ -37,4 +37,17 @@ class AgendaMarcacao extends Model
             ->orderBy('agenda_marcacoes.hora_inicial','ASC')
             ->get();
     }
+
+    public static function solicitaCancelamentoMarcacao($id) {
+        
+        $marcacao = AgendaMarcacao::findOrFail($id);
+
+        if ($marcacao->evolucao == null) {
+            $marcacao->paciente_solicita_cancelar = date('Y-m-d H:i:s');
+            $marcacao->save();
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

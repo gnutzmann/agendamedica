@@ -26,6 +26,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('agenda', 'AgendaController')->middleware('auth')->middleware('can:ehMedico');
-Route::resource('agenda.marcacao', 'AgendaMarcacaoController')->middleware('auth')->middleware('can:ehMedico');;
+Route::resource('agenda.marcacao', 'AgendaMarcacaoController')->middleware('auth')->middleware('can:ehMedico');
 Route::resource('paciente', 'PacienteController')->middleware('auth')->middleware('can:ehMedico');
+Route::put('/marcacao/cancela/{id}', 'AgendaMarcacaoController@cancela')->name('marcacao.cancela')->middleware('can:ehPaciente');
 
