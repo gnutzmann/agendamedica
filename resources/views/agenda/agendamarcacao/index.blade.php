@@ -1,92 +1,72 @@
 @extends('layouts.app') 
 @section('content')
-<div id="main" class="container justify-content-center">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
 
-    <div id="top" class="row">
-        <div class="col-sm-12">
-            <h2>Agenda - Marcações</h2>
-        </div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('agenda.index') }}">Agendas</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Marcações</li>
+                </ol>
+            </nav>
 
-    </div>
-    <!-- /#top -->
-
-    <hr />
-
-    <div class="row">
-
-        <div class="col-sm-3 col-md-6">
-            <a href="{{action('AgendaMarcacaoController@create',$agenda_id)}}" class="btn btn-primary pull-right h2">Nova marcação</a>
-        </div>
-
-        <div class="col-sm-6 col-md-6 float-right">
-
-            <div class="input-group h2">
-                <input name="busca" class="form-control" id="busca" type="text" placeholder="Pesquisar">
-                <span class="input-group-btn">
-    					<button class="btn btn-primary" type="submit">
-    					<span class="fa fa-search"></span>
-                </button>
-                </span>
+            <div class="col-md-8 p-0">
+                <h2>Agenda - Marcações</h2>
             </div>
 
+            <hr />
+
+            <div class="col-md-8 pl-0">
+                <a href="{{action('AgendaMarcacaoController@create',$agenda_id)}}" class="btn btn-primary pull-right h2">Nova marcação</a>
+            </div>            
+
+            <div class="card-deck justify-content-center">
+                @foreach($marcacoes as $marcacao)
+                    <div class="row col-xs-12 col-md-8 p-1">
+                        <div class="card border-primary col-xs-12 col-md-10 p-0">                                                                                   
+                            <div class="card-header border-primary bg-primary text-white col-md-12 p-2">                                
+                                <p class=""><strong>{{ date('d-m-Y',strtotime($marcacao->data)) . " (" . date('H:i',strtotime($marcacao->hora_inicial)) ." as ". date('H:i',strtotime($marcacao->hora_final))  . ') '}}</strong></p>                                
+                            </div>    
+
+                            <div class="card-body">                   
+                                <div class="col-md-6 float-left">                                
+                                    <p>{{ $marcacao->nome }}</p>
+                                </div>
+
+                                <div class="col-md-6 float-right">
+                                    <div class="form-inline float-right">                                    
+                                        <span class="input-group-btn m-1">
+                                            <a class="btn btn-warning btn-xs" href="{{ action('AgendaMarcacaoController@edit',[$agenda_id, $marcacao->id]) }}" style="color:white; max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Alterar">
+                                                <span class="fa fa-edit"></span>
+                                            </a>                                            
+                                        </span>
+
+                                        <span class="input-group-btn m-1">
+                                            <form action="{{action('AgendaMarcacaoController@destroy',[$agenda_id,$marcacao->id])}}" method="POST">
+                                                @csrf
+                                                <input name="_method" type="hidden" value="DELETE">
+                                                    <button type="submit" class="btn btn-danger btn-xs" style="color:white;max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Excluir">
+                                                        <span class="fa fa-trash-alt"></span>
+                                                    </button>
+                                                </form>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>                            
+                            @if($marcacao->paciente_solicita_cancelar != null)
+                                <div class="card-footer pb-0 pt-0">
+                                    @if($marcacao->paciente_solicita_cancelar != null)
+                                        <span class="badge badge-pill badge-danger">Paciente solicita cancelamento</span> 
+                                    @endif
+                                </div>
+                            @endif
+                        </div>                        
+                    </div>                
+                @endforeach
+            </div>
         </div>
     </div>
-
-    <div id="lista" class="row">
-
-        <div class="table-responsive col-md-12">
-            <table class="table table-striped" cellspacing="0" cellpadding="0">
-                <thead>
-                    <tr>
-                        <th>Data</th>
-                        <th>Hora</th>                        
-                        <th>Paciente</th>                        
-                        <th colspan="3" class="text-center">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($marcacoes as $marcacao)
-                    <tr>
-                        <td class="">{{ date('d-m-Y',strtotime($marcacao->data)) }}</td>
-                        <td class="">{{ date('H:i',strtotime($marcacao->hora_inicial)) ." as ". date('H:i',strtotime($marcacao->hora_final)) }}</td>                        
-                        <td class="">{{ $marcacao->nome }}</td>                        
-
-                        <td>              
-                            <div class="form-inline justify-content-center">         
-                                <span class="input-group-btn m-1">
-                                    <a class="btn btn-warning btn-xs" href="{{action('AgendaMarcacaoController@edit',[$agenda_id, $marcacao->id])}}" style="color:white; max-width: 38px">                                 
-                                    <span class="fa fa-edit"></span>
-                                </a>
-                                </span>
-                            
-                                <span class="input-group-btn m-1">
-                                    <form action="{{action('AgendaMarcacaoController@destroy',[$agenda_id,$marcacao->id])}}" method="POST">                                        
-                                        @csrf
-                                        <input name="_method" type="hidden" value="DELETE">
-                                        <button type="submit" class="btn btn-danger btn-xs" style="color:white;max-width: 38px">
-                                            <span class="fa fa-trash-alt"></span>                                    
-                                        </button>
-                                    </form>
-                                </span>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-
-    </div>
-    <!-- /#list -->
-
-    <div id="bottom" class="row">
-        <div class="col-md-12">
-            <div align="center">{{$marcacoes}}</div>
-            <!-- /.pagination -->
-        </div>
-    </div>
-    <!-- /#bottom -->
 </div>
-<!-- /#main -->
-
 @endsection

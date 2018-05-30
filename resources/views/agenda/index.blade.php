@@ -4,6 +4,14 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Agendas</li>
+                </ol>
+            </nav>
+
             <div class="col-md-8 p-0">
                 <h2>Gerenciamento de agendas</h2>
             </div>
@@ -25,13 +33,13 @@
 
                                 <div class="form-inline justify-content-center">
                                     <span class="input-group-btn m-1">
-                                        <a class="btn btn-success {{ $agenda['ativa'] == 'Não' ? "disabled" : ''}} btn-xs" href="{{ action('AgendaMarcacaoController@index', $agenda['id']) }}" style="color:white;max-width: 38px">
+                                        <a class="btn btn-success {{ $agenda['ativa'] == 'Não' ? "disabled" : ''}} btn-xs" href="{{ action('AgendaMarcacaoController@index', $agenda['id']) }}" style="color:white;max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Marcações">
                                             <span class="fa fa-calendar-check"></span>
                                         </a>
                                     </span>
                                 
                                     <span class="input-group-btn m-1">
-                                        <a class="btn btn-warning btn-xs" href="{{action('AgendaController@edit', $agenda['id'])}}" style="color:white; max-width: 38px">
+                                        <a class="btn btn-warning btn-xs" href="{{action('AgendaController@edit', $agenda['id'])}}" style="color:white; max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Alterar">
                                             <span class="fa fa-edit"></span>
                                         </a>
                                     </span>
@@ -40,7 +48,7 @@
                                         <form action="{{action('AgendaController@destroy', $agenda['id'])}}" method="POST">
                                             @csrf
                                             <input name="_method" type="hidden" value="DELETE">
-                                                <button type="submit" class="btn btn-danger btn-xs" style="color:white;max-width: 38px">
+                                                <button type="submit" class="btn btn-danger btn-xs" style="color:white;max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Excluir">
                                             <span class="fa fa-trash-alt"></span>
                                             </button>
                                         </form>
@@ -65,11 +73,4 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
 @endsection

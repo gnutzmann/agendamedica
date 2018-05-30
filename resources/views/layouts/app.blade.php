@@ -21,6 +21,9 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">    
     <link href="{{ asset('css/fontawesome-all.css') }}" rel="stylesheet">
     
+    <script>
+        $(function () { $('[data-toggle="tooltip"]').tooltip() })    
+    </script>
 </head>
 <body>
     <div id="app">

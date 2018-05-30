@@ -48,7 +48,7 @@
 
 @if ($errors->any())
 
-    <div class="alert alert-dange text-centerr">
+    <div class="alert alert-danger text-center alert-block">
 
         <button type="button" class="close" data-dismiss="alert">×</button> 
         
