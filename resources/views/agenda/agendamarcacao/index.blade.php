@@ -18,16 +18,31 @@
 
             <hr />
 
-            <div class="col-md-8 pl-0">
-                <a href="{{action('AgendaMarcacaoController@create',$agenda_id)}}" class="btn btn-primary pull-right h2">Nova marcação</a>
-            </div>            
+            <div class="row m-2 pl-0">
+                <div class="col-sm-8 col-md-8 pl-0">
+                    <a href="{{action('AgendaMarcacaoController@create',$agenda_id)}}" class="btn btn-primary pull-right h2">Nova marcação</a>
+                </div>            
+
+                <div class="col-sm-6 col-md-4 float-right">                        
+                    <form action="{{ action('AgendaMarcacaoController@index', $agenda_id) }}" method="get">
+                        <div class="input-group">                            
+                            <input type="date" name="busca_data" id="busca_data" value="{{$busca_data}}">
+                            <span class="input-group-btn">
+                        		<button class="btn btn-primary" type="submit">
+                        		    <span class="fa fa-search"></span>
+                                </button>
+                            </span>
+                        </div>                
+                    </form>
+                </div>
+            </div>
 
             <div class="card-deck justify-content-center">
                 @foreach($marcacoes as $marcacao)
                     <div class="row col-xs-12 col-md-8 p-1">
                         <div class="card border-primary col-xs-12 col-md-10 p-0">                                                                                   
-                            <div class="card-header border-primary bg-primary text-white col-md-12 p-2">                                
-                                <p class=""><strong>{{ date('d-m-Y',strtotime($marcacao->data)) . " (" . date('H:i',strtotime($marcacao->hora_inicial)) ." as ". date('H:i',strtotime($marcacao->hora_final))  . ') '}}</strong></p>                                
+                            <div class="card-header border-primary bg-primary text-white col-md-12 p-1">                                
+                                <strong>{{ date('d-m-Y',strtotime($marcacao->data)) . " (" . date('H:i',strtotime($marcacao->hora_inicial)) ." as ". date('H:i',strtotime($marcacao->hora_final))  . ') '}}</strong>
                             </div>    
 
                             <div class="card-body">                   

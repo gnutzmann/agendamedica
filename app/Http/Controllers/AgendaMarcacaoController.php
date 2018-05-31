@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\AgendaMarcacao;
 use App\Paciente;
+use PHPUnit\Framework\Constraint\IsEmpty;
 
 class AgendaMarcacaoController extends Controller
 {
@@ -13,11 +14,24 @@ class AgendaMarcacaoController extends Controller
      * @param  int  $agenda
      * @return \Illuminate\Http\Response
      */
-    public function index($agenda_id)
+    public function index($agenda_id, Request $request)
     {
-        $marcacoes = AgendaMarcacao::listaMarcacoes($agenda_id);
+        //dd(isset($request)); 
+        //&& empty($request->busca_data));
         
-        return view('agenda.agendamarcacao.index', compact('marcacoes', 'agenda_id'));    
+        if (isset($request->busca_data)) {
+            if (empty($request->busca_data)) {
+                $busca_data = date('Y-m-d');    
+            } else {            
+                $busca_data = $request->busca_data;
+            }
+        } else {            
+            $busca_data = null;
+        }
+
+        $marcacoes = AgendaMarcacao::listaMarcacoes($agenda_id,$busca_data);                
+        
+        return view('agenda.agendamarcacao.index', compact('marcacoes', 'agenda_id','busca_data'));    
     }
 
     /**

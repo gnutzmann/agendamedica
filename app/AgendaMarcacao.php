@@ -14,15 +14,22 @@ class AgendaMarcacao extends Model
         return $this->belongsTo('App\Paciente');
     }
 
-    public static function listaMarcacoes($agenda_id){
+    public static function listaMarcacoes($agenda_id,$data){
 
-        return DB::table('agenda_marcacoes')
+        $query = DB::table('agenda_marcacoes')
             ->join('pacientes', 'agenda_marcacoes.paciente_id', '=', 'pacientes.id')
             ->select('agenda_marcacoes.*','pacientes.nome')
             ->whereNull('pacientes.deleted_at')
-            ->where('agenda_marcacoes.agenda_id','=',$agenda_id)
-            ->orderBy('agenda_marcacoes.data', 'ASC')
-            ->paginate(10);
+            ->where('agenda_marcacoes.agenda_id','=',$agenda_id);
+            
+        if ($data != null) {
+            $query->whereDate('agenda_marcacoes.data', '=', $data);
+        }
+        
+        $dados = $query->orderBy('agenda_marcacoes.data', 'ASC')
+                       ->get();
+
+        return $dados;
     }
 
     public static function listaMarcacoesPaciente($paciente_id)
@@ -31,7 +38,7 @@ class AgendaMarcacao extends Model
             ->join('agendas', 'agenda_marcacoes.agenda_id', '=', 'agendas.id')
             ->join('medicos', 'agendas.medico_id', '=', 'medicos.id')
             ->select('agenda_marcacoes.*', 'agendas.medico_id', 'medicos.nome')            
-            ->where('agenda_marcacoes.paciente_id', '=', $paciente_id)
+            ->where('agenda_marcacoes.paciente_id', '=', $paciente_id)         
             ->whereDate('agenda_marcacoes.data','>=',date('Y-m-d'))
             ->orderBy('agenda_marcacoes.data', 'ASC')
             ->orderBy('agenda_marcacoes.hora_inicial','ASC')
