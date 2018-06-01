@@ -23,19 +23,26 @@ class Paciente extends Model
         return $this->hasMany('App\AgendaMarcacao');
     }
 
-    public static function listaPacienteMedico($medico_id) {
+    public static function listaPacienteMedico($medico_id, $busca) {
 
-        $pacientes = DB::table('pacientes')     
+        $query = DB::table('pacientes')     
                         ->join('medico_paciente','pacientes.id','=','medico_paciente.paciente_id')                   
                         ->select('pacientes.id', 'pacientes.nome','pacientes.data_nascimento','pacientes.email')
                         ->whereNull('pacientes.deleted_at')                        
-                        ->where('medico_paciente.medico_id','=',$medico_id)
-                        ->orderBy('pacientes.nome', 'ASC')
-                        ->paginate(10);
+                        ->where('medico_paciente.medico_id','=',$medico_id);
+
+                        if ($busca != '') {
+                            $query->where(function ($x) use ($busca) {
+                                            $x->where('pacientes.nome','like', '%' . $busca . '%' )                            
+                                              ->orWhere('pacientes.email','like', '%' . $busca . '%');
+                                          });
+                        }
+
+        $query->orderBy('pacientes.nome', 'ASC');                
+
+        $pacientes = $query->paginate(100);
 
         return $pacientes;
                         
-    }
-
-
+    }    
 }

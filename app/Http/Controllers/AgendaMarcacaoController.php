@@ -43,7 +43,7 @@ class AgendaMarcacaoController extends Controller
     {   
 
         $user = auth()->user();
-        $pacientes = Paciente::listaPacienteMedico($user->medico_id);        
+        $pacientes = Paciente::listaPacienteMedico($user->medico_id,null);        
 
         return view('agenda.agendamarcacao.create',compact('agenda_id','pacientes'));
     }

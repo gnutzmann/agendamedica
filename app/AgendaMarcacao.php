@@ -16,17 +16,22 @@ class AgendaMarcacao extends Model
 
     public static function listaMarcacoes($agenda_id,$data){
 
-        $query = DB::table('agenda_marcacoes')
-            ->join('pacientes', 'agenda_marcacoes.paciente_id', '=', 'pacientes.id')
-            ->select('agenda_marcacoes.*','pacientes.nome')
-            ->whereNull('pacientes.deleted_at')
-            ->where('agenda_marcacoes.agenda_id','=',$agenda_id);
+        $query = DB::table('agenda_marcacoes as am')
+            ->join('pacientes as p', 'am.paciente_id', '=', 'p.id')
+            ->join('agendas as a', 'am.agenda_id','=','a.id')
+            ->join('medico_paciente as mp', function ($join) {            
+                                                    $join->on('a.medico_id','=','mp.medico_id')
+                                                         ->on('am.paciente_id','=','mp.paciente_id');
+                                                })
+            ->select('am.*','p.nome')
+            ->whereNull('p.deleted_at')
+            ->where('am.agenda_id','=',$agenda_id);
             
         if ($data != null) {
-            $query->whereDate('agenda_marcacoes.data', '=', $data);
+            $query->whereDate('am.data', '=', $data);
         }
         
-        $dados = $query->orderBy('agenda_marcacoes.data', 'ASC')
+        $dados = $query->orderBy('am.data', 'ASC')
                        ->get();
 
         return $dados;

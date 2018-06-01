@@ -26,16 +26,16 @@
         </div>
 
         <div class="col-sm-6 col-md-6 float-right">
-
-            <div class="input-group h2">
-                <input name="busca" class="form-control" id="busca" type="text" placeholder="Pesquisar">
-                <span class="input-group-btn">
-    					<button class="btn btn-primary" type="submit">
-    					<span class="fa fa-search"></span>
-                </button>
-                </span>
-            </div>
-
+            <form action="{{ action('PacienteController@index') }}" method="get">
+                <div class="input-group">
+                    <input name="busca" class="form-control" id="busca" type="text" placeholder="Pesquisar">
+                    <span class="input-group-btn">
+    		    			<button class="btn btn-primary" type="submit">
+    		    			<span class="fa fa-search"></span>
+                    </button>
+                    </span>
+                </div>
+            </form>
         </div>
     </div>
 

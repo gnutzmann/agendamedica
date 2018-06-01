@@ -17,11 +17,17 @@ class PacienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {       
         $user = auth()->user();        
 
-        $pacientes = Paciente::listaPacienteMedico($user->medico_id);        
+        if (isset($request->busca)) {
+            $busca = $request->busca;
+        } else {
+            $busca = '';
+        }
+
+        $pacientes = Paciente::listaPacienteMedico($user->medico_id,$busca);        
 
         return view('paciente.index', compact('pacientes'));
     }
@@ -146,8 +152,9 @@ class PacienteController extends Controller
      */
     public function destroy($id)
     {
-        $paciente = Paciente::findOrFail($id);
-        $paciente->delete();
+        $user = auth()->user();
+        MedicoPaciente::ExcluiMedicoPaciente($user->medico_id,$id);
+
         return redirect()->route('paciente.index')->with('alert-success', 'O paciente foi removido com sucesso!');
     }
 }
