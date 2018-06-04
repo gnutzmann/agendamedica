@@ -105,8 +105,12 @@ class AgendaMarcacaoController extends Controller
     {
         $marcacao = AgendaMarcacao::findOrFail($id);        
         $marcacao->evolucao_paciente = trim($request->evolucao_paciente);
-
-        //dd($request->evolucao_paciente);
+        
+        if (isset($request->realizado)) { 
+            $marcacao->realizado = true;        
+        } else {
+            $marcacao->realizado = false;
+        }
 
         $marcacao->save();
 

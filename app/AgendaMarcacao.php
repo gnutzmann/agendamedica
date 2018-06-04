@@ -28,7 +28,9 @@ class AgendaMarcacao extends Model
             ->where('am.agenda_id','=',$agenda_id);
             
         if ($data != null) {
-            $query->whereDate('am.data', '=', $data);
+            $query->whereDate('am.data','=', $data);
+        } else {
+            $query->whereDate('am.data', '>=', date('Y-m-d'));
         }
         
         $dados = $query->orderBy('am.data', 'ASC')

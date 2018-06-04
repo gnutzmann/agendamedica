@@ -45,4 +45,30 @@ class Paciente extends Model
         return $pacientes;
                         
     }    
+
+    public static function listaPacienteEvolucao($id,$medico_id) {
+        
+        //DB::enableQueryLog();
+
+        $query = DB::table('agenda_marcacoes as am')
+                             ->join('pacientes as p', 'am.paciente_id', '=', 'p.id')
+                             ->join('agendas as a', 'am.agenda_id', '=', 'a.id')
+                             ->join('medico_paciente as mp', function ($join) {
+                                                                $join->on('a.medico_id', '=', 'mp.medico_id')
+                                                                     ->on('am.paciente_id', '=', 'mp.paciente_id');
+                                                            })
+            
+                             ->select('am.*', 'p.nome')
+                             ->whereNull('p.deleted_at')
+                             ->where('am.realizado','=',true)                             
+                             ->where('p.id', '=', $id)
+                             ->where('a.medico_id', '=', $medico_id);                           
+
+        $dados = $query->orderBy('am.data', 'DESC')
+                       ->get();        
+
+        //dd(DB::getQueryLog());
+
+        return $dados;
+    }
 }

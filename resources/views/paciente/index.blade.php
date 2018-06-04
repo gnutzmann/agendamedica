@@ -61,6 +61,14 @@
                         <td class="">{{$paciente->email}}</td>
 
                         <td>
+
+                            <div class="form-inline justify-content-center">
+                                <span class="input-group-btn m-1">
+                                    <a class="btn btn-info btn-xs" href="{{action('PacienteController@show', $paciente->id)}}" style="color:white;max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Evoluções">
+                                        <span class="fa fa-file"></span>
+                                    </a>
+                                </span>
+
                             <div class="form-inline justify-content-center">
                             <span class="input-group-btn m-1">
                             <a class="btn btn-success btn-xs" href="#" style="color:white;max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Compartilhar">
@@ -78,7 +86,7 @@
                                 <form action="{{action('PacienteController@destroy', $paciente->id)}}" method="POST">
                                     @csrf
                                     <input name="_method" type="hidden" value="DELETE">
-                                    <button type="submit" class="btn btn-danger btn-xs" style="color:white;max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Excluir">
+                                    <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Confirma a exclusão?')" style="color:white;max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Excluir">
                                         <span class="fa fa-trash-alt"></span>                                    
                                     </button>
                                 </form>

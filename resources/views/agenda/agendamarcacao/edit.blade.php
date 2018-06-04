@@ -35,6 +35,16 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-8">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="realizado" name="realizado" {{ $marcacao->realizado ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="realizado">Atendimento realizado</label>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group row m-0">
                             <label for="updated_at" class="col-md-4 col-form-label text-md-right">Atualizado em</label>
                         

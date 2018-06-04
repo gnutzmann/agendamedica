@@ -41,11 +41,11 @@
                 @foreach($marcacoes as $marcacao)
                     <div class="row col-xs-12 col-md-8 p-1">
                         <div class="card border-primary col-xs-12 col-md-10 p-0">                                                                                   
-                            <div class="card-header border-primary bg-primary text-white col-md-12 p-1">                                
+                            <div id="cardheard{{$marcacao->id}}" class="card-header border-primary bg-primary text-white col-md-12 p-1">                                
                                 <strong>{{ date('d-m-Y',strtotime($marcacao->data)) . " (" . date('H:i',strtotime($marcacao->hora_inicial)) ." as ". date('H:i',strtotime($marcacao->hora_final))  . ') '}}</strong>
                             </div>    
 
-                            <div class="card-body">                   
+                            <div id="cardbody{{$marcacao->id}}" class="card-body">                   
                                 <div class="col-md-6 float-left">                                
                                     <p>{{ $marcacao->nome }}</p>
                                 </div>
@@ -60,16 +60,17 @@
 
                                         <span class="input-group-btn m-1">
                                             <form action="{{action('AgendaMarcacaoController@destroy',[$agenda_id,$marcacao->id])}}" method="POST">
-                                                @csrf
-                                                <input name="_method" type="hidden" value="DELETE">
-                                                    <button type="submit" class="btn btn-danger btn-xs" style="color:white;max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Excluir">
+                                                @csrf                                                                                                                                                        
+                                                    <input name="_method" type="hidden" value="DELETE">
+                                                    <button type="submit" class="btn btn-danger btn-xs" style="color:white;max-width: 38px" title="Excluir">
                                                         <span class="fa fa-trash-alt"></span>
-                                                    </button>
-                                                </form>
-                                        </span>
+                                                    </button>                                                                                                            
+                                            </form>
+                                        </span>                        
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>    
+
                             @if($marcacao->paciente_solicita_cancelar != null)
                                 <div class="card-footer pb-0 pt-0">
                                     @if($marcacao->paciente_solicita_cancelar != null)
@@ -77,11 +78,15 @@
                                     @endif
                                 </div>
                             @endif
+
                         </div>                        
-                    </div>                
+                    </div>                         
+
                 @endforeach
             </div>
         </div>
     </div>
 </div>
+
 @endsection
+

@@ -90,7 +90,11 @@ class PacienteController extends Controller
      */
     public function show($id)
     {
-        //
+        $medico_id = auth()->user()->medico_id;
+
+        $evolucoes = Paciente::listaPacienteEvolucao($id,$medico_id);
+
+        return view('paciente.show',compact('evolucoes'));        
     }
 
     /**

@@ -15,7 +15,7 @@ class AgendaController extends Controller
         $agendas = Agenda::where('medico_id','=',$user['medico_id'])->orderBy('ativa', 'desc')->orderBy('nome', 'asc')->get();
         
         foreach ($agendas as $key => $agenda) {
-            $agenda['tot_marcacao'] = AgendaMarcacao::where('agenda_id','=',$agenda['id'])->whereDate('data','>=',date('Y-m-d'))->count();    
+            $agenda['tot_marcacao'] = AgendaMarcacao::where('agenda_id','=',$agenda['id'])->where('realizado','=',false)->whereDate('data','>=',date('Y-m-d'))->count();    
             $agenda['tot_cancelar'] = AgendaMarcacao::where('agenda_id', '=', $agenda['id'])->whereDate('data', '>=', date('Y-m-d'))->whereNotNull('paciente_solicita_cancelar')->count();
         }
         
