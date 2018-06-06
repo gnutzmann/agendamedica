@@ -14,24 +14,22 @@
         <div class="col-sm-12">
             <h2>Cadastro de pacientes</h2>
         </div>
-
     </div>    
 
     <hr />
 
-    <div class="row">
-
-        <div class="col-sm-3 col-md-6">
-            <a href="{{action('PacienteController@create')}}" class="btn btn-primary pull-right h2">Novo paciente</a>
+    <div class="row m-0 pl-0 pr-0">
+        <div class="col-sm-8 col-md-8 m-0 pl-0 pr-0">
+            <a href="{{action('PacienteController@create')}}" class="btn btn-primary pull-right h2">Nova paciente</a>
         </div>
-
-        <div class="col-sm-6 col-md-6 float-right">
+    
+        <div class="col-sm-6 col-md-4 float-right">
             <form action="{{ action('PacienteController@index') }}" method="get">
                 <div class="input-group">
-                    <input name="busca" class="form-control" id="busca" type="text" placeholder="Pesquisar">
+                    <input name="busca" class="form-control" id="busca" type="text" placeholder="Nome, e-mail ou cidade">
                     <span class="input-group-btn">
-    		    			<button class="btn btn-primary" type="submit">
-    		    			<span class="fa fa-search"></span>
+                        <button class="btn btn-primary" type="submit">
+                        <span class="fa fa-search"></span>
                     </button>
                     </span>
                 </div>
@@ -39,74 +37,66 @@
         </div>
     </div>
 
-    <div id="lista" class="row">
 
-        <div class="table-responsive col-md-12">
-            <table class="table table-striped table-bordered table-hover" cellspacing="0" cellpadding="0">
-                <thead>
-                    <tr>
-                        <th>ID</th>                        
-                        <th>Nome</th>
-                        <th>Data de nascimento</th>
-                        <th>e-mail</th>
-                        <th colspan="3" class="text-center">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($pacientes as $paciente)
-                    <tr>
-                        <td class="">{{$paciente->id}}</td>                        
-                        <td class="">{{$paciente->nome}}</td>
-                        <td class="">{{date('d/m/Y',strtotime($paciente->data_nascimento))}}</td>
-                        <td class="">{{$paciente->email}}</td>
+    <div class="card-deck justify-content-center">
+        @foreach($pacientes as $paciente)
+        <div class="row col-xs-12 col-md-8 justify-content-center">
+            <div class="card border-primary col-xs-12 col-md-8 m-1 p-0">
+                <div id="cardheard{{$paciente->id}}" class="card-header border-primary bg-primary text-white col-md-12 p-1">
+                    <h5 class="pb-0 mb-0"><strong>{{ $paciente->nome }}</strong></h5>
+                    <p class="ml-4 m-0 p-0">  {{ $paciente->email }}</p>
+                </div>
+    
+                <div id="cardbody{{$paciente->id}}" class="card-body">
+                    <p class="mb-0"><em>Informações básicas</em></p>
+                    <div class="card p-0 mb-2 p-1 border-info">
+                        <p class="mb-0">Data de nasc.: {{ date('d/m/Y',strtotime($paciente->data_nascimento)) }}</p>
+                        @if (isset($paciente->end_res_cidade))
+                             <p class="mb-0">{{ $paciente->end_res_cidade . '/' . $paciente->end_res_uf }}</p>
+                        @endif
 
-                        <td>
+                        <br>
 
-                            <div class="form-inline justify-content-center">
-                                <span class="input-group-btn m-1">
-                                    <a class="btn btn-info btn-xs" href="{{action('PacienteController@show', $paciente->id)}}" style="color:white;max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Evoluções">
-                                        <span class="fa fa-file"></span>
-                                    </a>
-                                </span>
+                        @if (isset($paciente->fone_celular))
+                        <p class="mb-0">{{ $paciente->fone_celular }}</p>
+                        @endif
+                    </div>
 
-                            <div class="form-inline justify-content-center">
+                    <div class="col-xs-6 col-md-12">
+                        <div class="form-inline justify-content-center">
                             <span class="input-group-btn m-1">
-                            <a class="btn btn-success btn-xs" href="#" style="color:white;max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Compartilhar">
-                                <span class="fa fa-share"></span>
-                            </a>
-                            </span>                      
+                                <a class="btn btn-info btn-xs" href="{{action('PacienteController@show', $paciente->id)}}" style="color:white;max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Evoluções">
+                                    <span class="fa fa-file"></span>
+                                </a>
+                            </span>
+                        
+                            <span class="input-group-btn m-1">
+                                <a class="btn btn-success btn-xs" href="#" style="color:white;max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Compartilhar">
+                                    <span class="fa fa-share"></span>
+                                </a>
+                            </span>
                         
                             <span class="input-group-btn m-1">
                                 <a class="btn btn-warning btn-xs" href="{{action('PacienteController@edit', $paciente->id)}}" style="color:white; max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Alterar">
                                     <span class="fa fa-edit"></span>
-                            </a>
+                                </a>
                             </span>
-
+                        
                             <span class="input-group-btn m-1">
                                 <form action="{{action('PacienteController@destroy', $paciente->id)}}" method="POST">
                                     @csrf
                                     <input name="_method" type="hidden" value="DELETE">
                                     <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Confirma a exclusão?')" style="color:white;max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Excluir">
-                                        <span class="fa fa-trash-alt"></span>                                    
+                                        <span class="fa fa-trash-alt"></span>
                                     </button>
                                 </form>
                             </span>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-
-    </div>    
-
-    <div id="bottom" class="row">
-        <div class="col-md-12">
-            <div align="center">{{$pacientes}}</div>
-            
-        </div>
-    </div>
-    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+        @endforeach
+    </div>        
 </div>
 @endsection

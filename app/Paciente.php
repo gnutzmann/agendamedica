@@ -25,20 +25,21 @@ class Paciente extends Model
 
     public static function listaPacienteMedico($medico_id, $busca) {
 
-        $query = DB::table('pacientes')     
-                        ->join('medico_paciente','pacientes.id','=','medico_paciente.paciente_id')                   
-                        ->select('pacientes.id', 'pacientes.nome','pacientes.data_nascimento','pacientes.email')
-                        ->whereNull('pacientes.deleted_at')                        
-                        ->where('medico_paciente.medico_id','=',$medico_id);
+        $query = DB::table('pacientes as p')     
+                        ->join('medico_paciente as mp','p.id','=','mp.paciente_id')                   
+                        ->select('p.id', 'p.nome','p.data_nascimento', 'p.email', 'p.end_res_cidade', 'p.end_res_uf', 'p.sexo', 'p.fone_celular')
+                        ->whereNull('p.deleted_at')                        
+                        ->where('mp.medico_id','=',$medico_id);
 
                         if ($busca != '') {
                             $query->where(function ($x) use ($busca) {
-                                            $x->where('pacientes.nome','like', '%' . $busca . '%' )                            
-                                              ->orWhere('pacientes.email','like', '%' . $busca . '%');
+                                            $x->where('p.nome','like', '%' . $busca . '%' )                            
+                                              ->orWhere('p.email','like', '%' . $busca . '%')
+                                              ->orWhere('p.end_res_cidade', 'like', '%' . $busca . '%');
                                           });
                         }
 
-        $query->orderBy('pacientes.nome', 'ASC');                
+        $query->orderBy('p.nome', 'ASC');                
 
         $pacientes = $query->paginate(100);
 
