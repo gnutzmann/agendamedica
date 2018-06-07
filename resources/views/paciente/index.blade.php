@@ -71,7 +71,7 @@
                             </span>
                         
                             <span class="input-group-btn m-1">
-                                <a class="btn btn-success btn-xs" href="#" style="color:white;max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Compartilhar">
+                                <a class="btn btn-success btn-xs" href="{{action('PacienteController@share', $paciente->id)}}" style="color:white;max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Compartilhar">
                                     <span class="fa fa-share"></span>
                                 </a>
                             </span>

@@ -9,6 +9,7 @@ use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
 use App\Paciente;
 use App\MedicoPaciente;
 use App\User;
+use App\Medico;
 
 class PacienteController extends Controller
 {
@@ -161,4 +162,20 @@ class PacienteController extends Controller
 
         return redirect()->route('paciente.index')->with('alert-success', 'O paciente foi removido com sucesso!');
     }
+
+    public function share($id) {
+
+        $paciente = Paciente::findOrFail($id);
+
+        return view('paciente.share',compact('paciente'));
+    }
+
+    public function shareStore(Request $request, $id) {
+
+        $mensagem = MedicoPaciente::compartilhaPaciente($id, $request->email_medico);
+        
+        return redirect()->route('paciente.index')->with('alert-info', $mensagem);
+
+    }
+
 }

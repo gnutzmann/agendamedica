@@ -43,8 +43,7 @@ class Paciente extends Model
 
         $pacientes = $query->paginate(100);
 
-        return $pacientes;
-                        
+        return $pacientes;                        
     }    
 
     public static function listaPacienteEvolucao($id,$medico_id) {
