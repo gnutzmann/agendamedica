@@ -31,5 +31,3 @@ Route::resource('paciente', 'PacienteController')->middleware('auth')->middlewar
 Route::put('/marcacao/cancela/{id}', 'AgendaMarcacaoController@cancela')->name('marcacao.cancela')->middleware('can:ehPaciente');
 Route::get('/paciente/share/{id}','PacienteController@share')->name('paciente.share')->middleware('can:ehMedico');
 Route::post('/paciente/shareStore/{id}', 'PacienteController@shareStore')->name('paciente.shareStore')->middleware('can:ehMedico');
-
-
