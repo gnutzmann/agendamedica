@@ -19,29 +19,37 @@
             <hr />
 
             <div class="col-md-8 pl-0">
-                <a href="{{action('MedicoEspecialideController@create')}}" class="btn btn-primary pull-right h2">Nova especialidade</a>
+                <a href="{{action('MedicoEspecialidadeController@create',$medico_id)}}" class="btn btn-primary pull-right h2">Nova especialidade</a>
             </div>        
             
-            <div class="card-deck justify-content-center">
+            <div class="card-deck justify-content-center">                
+                <div class="row col-12">
                 @foreach($especialidades as $especialidade)
+                    <div class="row col-xs-12 col-md-8 p-1">
+                        <div class="card border-primary col-xs-12 col-md-10 p-0">
 
-                    <div class="row col-xs-8 col-md-6 p-2">
-                        <div class="card col-xs-8 col-md-12 p-0">                    
-                            <h5 class="card-header">{{ $especialidade['nome'] }}</h5>
-                            <div class="card-body align-itens-bottom">                                                                                        
-                                    <span class="input-group-btn m-1">
-                                        <form action="{{action('AgendaController@destroy', $especialidade['id'])}}" method="POST">
+                            <div class="row card-body align-itens-bottom col-xs-12 col-md-12">
+                            
+                                <div class="col-xs-10 col-md-10">
+                                    <h5>{{ $especialidade->nome }}</h5>
+                                </div>
+
+                                <div class="col-xs-2 col-md-2 p-0 float-right">                                                                    
+                                    <span class="input-group-btn m-0 float-right">
+                                        <form action="{{action('MedicoEspecialidadeController@destroy',[$medico_id, $especialidade->id])}}" method="POST">
                                             @csrf
                                             <input name="_method" type="hidden" value="DELETE">
                                                 <button type="submit" class="btn btn-danger btn-xs" style="color:white;max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Excluir">
-                                            <span class="fa fa-trash-alt"></span>
-                                            </button>
+                                                    <span class="fa fa-trash-alt"></span>
+                                                </button>
                                         </form>
-                                    </span>
-                            </div>                                
-                        </div>                            
-                    </div>                 
+                                    </span>                        
+                                </div>                            
+                            </div>            
+                        </div>
+                    </div>     
                 @endforeach
+                </div>
             </div>               
         </div>
     </div>

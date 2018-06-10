@@ -11,19 +11,19 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>    
-
+    <script src="{{ asset('js/app.js') }}" defer></script>   
+        
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">    
-    <link href="{{ asset('css/fontawesome-all.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/fontawesome-all.css') }}" rel="stylesheet">    
     
     <script>
-        $(function () { $('[data-toggle="tooltip"]').tooltip() })    
-    </script>
+        $(function () { $('[data-toggle="tooltip"]').tooltip() }); 
+    </script>    
 </head>
 <body>
     <div id="app">
@@ -56,7 +56,14 @@
                                    {{ Auth::user()->getTratamento(Auth::user()->medico_id) . " " . Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
+                                
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    @if (Auth::user()->medico_id != null)
+                                        <a class="dropdown-item" href="{{ route('medico.especialidade.index',Auth::user()->medico_id) }}">
+                                            Especialidades médicas
+                                        </a>
+                                    @endif
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -81,3 +88,4 @@
     </div>
 </body>
 </html>
+

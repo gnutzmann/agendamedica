@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\MedicoEspecialidade;
+use App\Especialidade;
 
 class MedicoEspecialidadeController extends Controller
 {
@@ -11,9 +13,11 @@ class MedicoEspecialidadeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($medico_id)    
     {
-        //
+        $especialidades = MedicoEspecialidade::listaMedicoEspecialidades($medico_id);
+
+        return view('medico.medicoespecialidade.index', compact('especialidades','medico_id'));    
     }
 
     /**
@@ -21,9 +25,11 @@ class MedicoEspecialidadeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create($medico_id)
+    {        
+        $especialidades = Especialidade::All();
+
+        return view('medico.medicoespecialidade.create', compact('medico_id', 'especialidades'));
     }
 
     /**
@@ -32,9 +38,14 @@ class MedicoEspecialidadeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $medico_id)
     {
-        //
+        $MedicoEspecialidade = new MedicoEspecialidade;
+        $MedicoEspecialidade->medico_id = $medico_id;
+        $MedicoEspecialidade->especialidade_id = $request->especialidade_id;
+        $MedicoEspecialidade->save();
+
+        return redirect()->route('medico.especialidade.index', compact('medico_id'))->with('alert-success', 'Especialidade médica adicionada com sucesso!');    
     }
 
     /**
@@ -77,8 +88,11 @@ class MedicoEspecialidadeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($medico_id,$id)
     {
-        //
+        $especialidade = MedicoEspecialidade::findOrFail($id);
+        $especialidade->Delete();
+        return redirect()->route('medico.especialidade.index', compact('medico_id'))->with('alert-success', 'Especialidade médica removida com sucesso!');
+
     }
 }

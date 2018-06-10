@@ -48,7 +48,7 @@
                                         <form action="{{action('AgendaController@destroy', $agenda['id'])}}" method="POST">
                                             @csrf
                                             <input name="_method" type="hidden" value="DELETE">
-                                                <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Confirma a exclusão?')" style="color:white;max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Excluir">
+                                                <button type="submit" class="btn btn-danger btn-xs" style="color:white;max-width: 38px" data-toggle="tooltip" data-placement="bottom" title="Excluir">
                                             <span class="fa fa-trash-alt"></span>
                                             </button>
                                         </form>
