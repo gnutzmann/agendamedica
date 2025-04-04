@@ -1,6 +1,7 @@
 <?php
 
 use App\AgendaMarcacao;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +16,8 @@ use App\AgendaMarcacao;
 
 Route::get('/', function () {
 
-    if (Auth::check()) {         
-        return redirect()->route('home');    
+    if (Auth::check()) {
+        return redirect()->route('home');
     } else {
         return view('welcome');
     }
@@ -24,7 +25,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('agenda', 'AgendaController')->middleware('auth')->middleware('can:ehMedico');
 Route::resource('agenda.marcacao', 'AgendaMarcacaoController')->middleware('auth')->middleware('can:ehMedico');
 Route::resource('paciente', 'PacienteController')->middleware('auth')->middleware('can:ehMedico');
