@@ -49,7 +49,7 @@ Agenda Médica é uma aplicação web desenvolvida em Laravel para gerenciar con
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/seu-usuario/agenda-medica.git
+   git clone https://github.com/gnutzmann/agenda-medica.git
    cd agenda-medica
    ```
 
