@@ -106,11 +106,6 @@ Para executar os testes, use o comando:
 ```bash
 php artisan test
 ```
-
-## Licença
-
-Este projeto é licenciado sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE) para mais informações.
-
----
+--- 
 
 Desenvolvido por Diogo Gnutzmann Santos.
